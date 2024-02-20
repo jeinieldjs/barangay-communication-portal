@@ -7,4 +7,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  namespace :api do
+    get 'psgc/fetch_provinces', to: 'psgc#fetch_provinces'
+    get 'psgc/fetch_cities_municipalities/:province_code', to: 'psgc#fetch_cities_municipalities'
+    get 'psgc/fetch_barangays/:city_or_municipality_code', to: 'psgc#fetch_barangays'
+  end
+  
 end
