@@ -1,0 +1,10 @@
+<%= form_with(model: [:admin, user], url: admin_resident_path(user), method: :patch, local: true) do |form| %>
+  <div class="status-button-container">
+    <div class="edit-status-form">
+      <%= form.button "Approve", type: :submit, class: "approve-button", name: 'user[status]', value: 'approved' %>
+    </div>
+    <div class="edit-status-form">
+      <%= form.button "Reject", type: :submit, class: "reject-button", name: 'user[status]', value: 'rejected' %>
+    </div>
+  </div>
+<% end %>
