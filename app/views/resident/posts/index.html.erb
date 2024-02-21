@@ -110,17 +110,17 @@
 
 
 <script>
-  let toggleButtons = document.querySelectorAll('.toggle-comments-btn');
+  var toggleButtons = document.querySelectorAll('.toggle-comments-btn');
 
   toggleButtons.forEach(function(button) {
     button.addEventListener('click', function() {
-      let postId = this.getAttribute('data-post-id');
-      let commentsContainer = document.getElementById('commentsContainer-' + postId);
-      let commentsTitle = document.querySelector('.comments-title');
+      var postId = this.getAttribute('data-post-id');
+      var commentsContainer = document.getElementById('commentsContainer-' + postId);
+      var commentsTitle = document.querySelector('.comments-title');
       commentsContainer.classList.toggle('hidden');
       commentsTitle.classList.toggle('hidden'); // Toggle comments title visibility
-      let commentCount = parseInt(this.getAttribute('data-comment-count'));
-      let likeCount = parseInt(this.getAttribute('data-like-count'));
+      var commentCount = parseInt(this.getAttribute('data-comment-count'));
+      var likeCount = parseInt(this.getAttribute('data-like-count'));
       if (commentsContainer.classList.contains('hidden')) {
         this.textContent = 'See all ' + commentCount + ' comments';
       } else {
@@ -129,14 +129,14 @@
     });
   });
 
-  let commentBtns = document.querySelectorAll(".comment-btn");
+  var commentBtns = document.querySelectorAll(".comment-btn");
   commentBtns.forEach(function(btn) {
     btn.addEventListener("click", function() {
-      let postId = this.getAttribute("data-post-id");
-      let modal = document.getElementById("commentModal-" + postId);
+      var postId = this.getAttribute("data-post-id");
+      var modal = document.getElementById("commentModal-" + postId);
       modal.style.display = "block";
 
-      let span = modal.querySelector(".comment-close");
+      var span = modal.querySelector(".comment-close");
       span.addEventListener("click", function() {
         modal.style.display = "none";
       });
