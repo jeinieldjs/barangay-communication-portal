@@ -59,16 +59,16 @@
 </div>
 
 <script>
-    const toggleButtons = document.querySelectorAll(".toggle-comments-btn");
+    var toggleButtons = document.querySelectorAll(".toggle-comments-btn");
     
 
     toggleButtons.forEach(button => {
-      let commentCount = parseInt(button.getAttribute('data-comment-count'));
+      var commentCount = parseInt(button.getAttribute('data-comment-count'));
 
       button.addEventListener("click", function() {
-        const postId = this.getAttribute("data-post-id");
-        const commentsContainer = document.getElementById(`commentsContainer-${postId}`);
-        const isVisible = this.getAttribute("data-visible") === "true";
+        var postId = this.getAttribute("data-post-id");
+        var commentsContainer = document.getElementById(`commentsContainer-${postId}`);
+        var isVisible = this.getAttribute("data-visible") === "true";
 
         commentsContainer.classList.toggle("hidden");
         this.innerText = isVisible ? `Show all ${commentCount} comments` : "Hide comments";
@@ -76,7 +76,7 @@
       });
     });
 
-    const scrollBtn = document.getElementById("scroll-to-bottom-btn");
+    var scrollBtn = document.getElementById("scroll-to-bottom-btn");
 
     scrollBtn.addEventListener("click", function(){
       window.scrollTo({
@@ -85,7 +85,7 @@
       });
     })
 
-     const scrollTopBtn = document.getElementById("scroll-to-top-btn");
+     var scrollTopBtn = document.getElementById("scroll-to-top-btn");
 
     scrollTopBtn.addEventListener("click", function(){
       window.scrollTo({
