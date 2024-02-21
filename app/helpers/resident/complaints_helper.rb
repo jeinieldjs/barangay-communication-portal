@@ -1,0 +1,2 @@
+module Resident::ComplaintsHelper
+end

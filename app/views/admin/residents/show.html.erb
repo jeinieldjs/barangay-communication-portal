@@ -1,0 +1,27 @@
+<div class="show-resident-wrapper">
+  <h1 class="page-title">Resident Details</h1>
+
+  <div class="show-resident-details">
+
+    <div class = "show-resident-profile-pic">
+      <% if @user.image.attached? %>
+        <%= image_tag(@user.image, style: "height:120px; width:120px", class: 'avatar') %>
+      <% end %>
+    </div>
+   
+    <p><strong style="color: #5C821A;">Last Name:</strong> <%= @user.last_name.titleize %></p>
+    <p><strong style="color: #5C821A;">First Name:</strong> <%= @user.first_name.titleize %></p>
+    <p><strong style="color: #5C821A;">User ID:</strong> <%= @user.id %></p>
+    <p><strong style="color: #5C821A;">Email:</strong> <%= @user.email %></p>
+    <p><strong style="color: #5C821A;">Contact Number:</strong> <%= @user.contact_number %></p>
+    <p><strong style="color: #5C821A;">Complete Address:</strong> <%= @user.complete_address.titleize %></p>
+    <p><strong style="color: #5C821A;">Status:</strong> <%= @user.status.titleize %></p>
+    <p><strong style="color: #5C821A;">Regitration Date:</strong> <%= @user.created_at.in_time_zone('Asia/Manila').strftime('%d %b %Y, %H:%M:%S') %></p>
+
+    <div class="show-resident-actions">
+      <%= link_to 'Back', admin_residents_path, class: "action-link" %>
+      <%= link_to 'Edit', edit_admin_resident_path(@user), class: "action-link" %>
+      <%= button_to 'Destroy', admin_resident_path(@user), method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-button action-link"  %>
+    </div>
+  </div>
+</div>

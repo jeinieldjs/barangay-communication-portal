@@ -1,0 +1,22 @@
+<div class="complaint-index-wrapper">
+  <h1 class="page-title">Your Complaints</h1>
+  <p class="page-description">These are the list of complaints you filed using your account. If a complaint still has a "pending" status, please patiently wait for our barangay admin to contact you. Rest assured that we are moving as quickly as we could to hear your concerns.</p>
+  <%= link_to "New Complaint", new_resident_complaint_path, class: "complaint-link" %>
+</div> 
+    <% if @complaints.empty? %>
+    <p class="no-complaints">You have not filed any complaints yet.</p>
+  <% else %>
+    <div class="complaint-card-wrapper">
+      <% @complaints.order(created_at: :desc).each do |complaint| %>
+        <div class="complaint-card">
+         <div class="complaint-top">
+          <h3 class="complaint-subject"> <%= link_to complaint.subject, resident_complaint_path(complaint), class: 'name-link' %></h3>
+          <p class="status-badge <%= complaint.status %>"><%= complaint.status %></p>
+         </div>
+          <p class="complaint-details"><%= complaint.created_at.in_time_zone('Asia/Manila').strftime('%d %b %Y, %H:%M:%S') %></p>
+          <p class="complaint-details"><%= truncate(complaint.description, length: 100) %></p>
+        </div>
+      <% end %>
+    </div>
+    <br>
+  <% end %>

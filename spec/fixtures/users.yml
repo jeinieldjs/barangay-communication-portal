@@ -1,0 +1,24 @@
+user1:
+  first_name: John
+  last_name: Doe
+  email: john.doe@sample.com
+  complete_address: "123 Main St, Four City"
+  province: "Laguna"
+  city_municipality: "City of Calamba"
+  barangay: "Bucal"
+  role: admin
+  status: approved
+  contact_number: 09012345678
+
+
+user2:
+  first_name: Jane
+  last_name: Doe
+  email: jane.doe@sample.com
+  complete_address: "123 Main St, Four City"
+  province: "Laguna"
+  city_municipality: "City of Calamba"
+  barangay: "Bucal"
+  role: resident
+  status: approved
+  contact_number: 09012345678

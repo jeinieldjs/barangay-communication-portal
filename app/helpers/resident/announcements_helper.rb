@@ -1,0 +1,2 @@
+module Resident::AnnouncementsHelper
+end

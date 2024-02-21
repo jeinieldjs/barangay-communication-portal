@@ -1,0 +1,18 @@
+<div class= "residents-index-wrapper">
+<h1 class="page-title">Announcements For BRGY.<%= current_user.barangay.upcase %></h1>
+
+<div class="residents-index-container">
+<% if @announcements.any? %>
+    <% @announcements.each do |announcement| %>
+        <div class="indiv-resident">
+        <%= link_to announcement.title, resident_announcement_path(announcement), class: "name-link" %>
+        <p><small>Posted at: <%= announcement.created_at.in_time_zone('Asia/Manila').strftime('%d %b %Y, %H:%M:%S') %></small></p>
+        <p><%= truncate(announcement.content, length: 200) %></p>
+        </div>
+      
+    <% end %>
+<% else %>
+  <p>No announcements found.</p>
+<% end %>
+</div>
+</div>

@@ -1,7 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe "Admin::Dashboards", type: :request do
-  describe "GET /index" do
-    pending "add some examples (or delete) #{__FILE__}"
+  include Devise::Test::IntegrationHelpers
+  fixtures :users
+
+  before do
+    @user = users(:user1)
+    sign_in @user
   end
+
+  describe "GET /index" do
+    it "returns http success" do
+      get admin_dashboard_index_url
+      expect(response).to have_http_status(:success)
+    end
+  end
+
 end

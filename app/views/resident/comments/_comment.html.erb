@@ -1,0 +1,37 @@
+<style>
+#comments-container.hidden {
+  display: none;
+}
+</style>
+
+<button id="toggle-comments-btn">See all comments</button>
+
+<div class="comments-container">
+  <!-- Your comment articles go here -->
+  <% @comments.each do |comment| %>
+    <article>
+      <small>By: <%= comment.user.first_name %> <%= comment.user.last_name %></small>
+      <p> <%= comment.content %></p>
+      <% if current_user == comment.user %>
+        <%= link_to "Delete", resident_post_comment_path(comment.post, comment), method: :delete, data: { confirm: "Are you sure you want to delete this comment?" }, class: "delete-comment-btn" %>
+      <% end %>
+    </article>
+    <hr />
+  <% end %>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const toggleButton = document.getElementById('toggle-comments-btn');
+  const commentsContainer = document.querySelector('.comments-container');
+
+  toggleButton.addEventListener('click', function() {
+    commentsContainer.classList.toggle('hidden');
+    if (commentsContainer.classList.contains('hidden')) {
+      toggleButton.textContent = 'See all comments';
+    } else {
+      toggleButton.textContent = 'Hide comments';
+    }
+  });
+});
+</script>

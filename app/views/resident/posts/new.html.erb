@@ -1,0 +1,38 @@
+<div class="new-post-wrapper">
+  <h2 class="page-title">Create New Post</h2>
+  <p class="page-description">As an effort to bring our neighborhood closer, residents may now communicate through posts. However, please be mindful of what you post. Posts that do not adhere to our community guidelines will be deleted. </p>
+
+<%= form_for @post, url: resident_posts_path,  html: { class: "new-post-form" } do |f|  %>
+
+  <% if @post.errors.any? %>
+    <div style="color: red;">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% @post.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="post-field">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "post-input" %>
+  </div>
+
+  <div class="post-field">
+    <%= f.label :content %>
+    <%= f.text_area :content, class: "post-input post-text-area" %>
+  </div>
+
+  <div class="post-field">
+    <%= f.check_box :anonymous %>
+    <%= f.label :anonymous, "Post anonymously" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Submit", class: "post-submit" %>
+  </div>
+<% end %>
+</div>

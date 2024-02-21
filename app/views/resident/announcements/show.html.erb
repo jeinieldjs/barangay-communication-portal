@@ -1,0 +1,13 @@
+<div class="show-announcement-wrapper">
+  <h1 class="page-title"><%= @announcement.title %></h1>
+
+  <div class="show-announcement-details">
+    <p><strong style="color: #5C821A;">Created At:</strong> <%= @announcement.created_at.strftime("%d %b %Y %H:%M:%S") %></p>
+    <p><strong style="color: #5C821A;">Updated At:</strong> <%= @announcement.updated_at.strftime("%d %b %Y %H:%M:%S") %></p>
+    <p><strong style="color: #5C821A;">Content:</strong> <%= @announcement.content %></p>
+
+    <div class="resident-show-announcement-actions">
+      <%= link_to 'Back', resident_announcements_path, class: "action-link" %>
+    </div>
+  </div>
+</div>
