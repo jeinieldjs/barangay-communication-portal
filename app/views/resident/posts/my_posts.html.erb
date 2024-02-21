@@ -1,0 +1,76 @@
+
+<div class="post-index-wrapper">
+  <h1 class="page-title">Your Posts</h1>
+  
+  <div class="post-index-actions">
+    <%= link_to "Create New Post", new_resident_post_path, class: "action-link" %>
+    <%= link_to "Back to All Posts", resident_posts_path, class: "action-link" %>
+  </div>
+
+  <div class="resident-end-posts-index-container">
+  <% @user_posts.order(created_at: :desc).each do |post| %>
+    <div class="resident-end-indiv-post ">
+      <p>
+          <% if post.anonymous? %>
+            <strong><span>Anonymous:</span></strong>
+          <% else %>
+            <div class="post-index-top">
+              <% if post.user.image.attached? %>
+                <%= image_tag(post.user.image, style: "height:50px; width:50px", class: 'avatar') %>
+              <% else %>
+                <div class="avatar-initials" id="image-container">
+                  <%= post.user.first_name[0] + post.user.last_name[0] %>
+                </div>
+              <% end %>
+              <strong><span><%= post.user.first_name %> <%= post.user.last_name %>:</span></strong>
+            </div>
+          <% end %>
+          <br>
+        <small class="posted-at-info">
+        <%= post.created_at.strftime("%d %b %Y, %H:%M:%S") %>
+        </small>
+      </p>
+      <h3><%= post.title %></h3>
+      <p><%= post.content %></p>
+      <% if post.comments.present? %>
+          <h6 class="comments-title">Comments:</h6>
+          <% comment_count = post.comments.count %>
+          <button class="toggle-comments-btn posts-buttons" data-post-id="<%= post.id %>" data-comment-count="<%= comment_count %>" data-visible="false">Show all <%= comment_count %> comments</button>
+          <div class="comments-container hidden" id="commentsContainer-<%= post.id %>">
+            <% post.comments.each do |comment| %>
+              <article>
+                <small>By: <%= comment.user.first_name %> <%= comment.user.last_name %></small> || 
+                <small><%= comment.created_at.in_time_zone("Asia/Manila").strftime("%d %b %Y, %H:%M:%S")  %></small>
+                <p><%= comment.content %></p>
+              </article>
+              <hr />
+            <% end %>
+          </div>
+        <% else %>
+        <div class="no-comment-statement">
+          <p><i><small>This post has no comments yet.</small></i></p>
+        </div>
+        <% end %>
+    </div>
+  <% end %>
+  </div>
+</div>
+
+<script>
+    const toggleButtons = document.querySelectorAll(".toggle-comments-btn");
+    
+
+    toggleButtons.forEach(button => {
+      let commentCount = parseInt(button.getAttribute('data-comment-count'));
+
+      button.addEventListener("click", function() {
+        const postId = this.getAttribute("data-post-id");
+        const commentsContainer = document.getElementById(`commentsContainer-${postId}`);
+        const isVisible = this.getAttribute("data-visible") === "true";
+
+        commentsContainer.classList.toggle("hidden");
+        this.innerText = isVisible ? `Show all ${commentCount} comments` : "Hide comments";
+        this.setAttribute("data-visible", !isVisible);
+      });
+    });
+</script>

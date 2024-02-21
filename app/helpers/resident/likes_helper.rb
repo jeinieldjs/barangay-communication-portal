@@ -1,0 +1,2 @@
+module Resident::LikesHelper
+end
