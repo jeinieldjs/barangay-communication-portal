@@ -1,0 +1,42 @@
+<div class="complaint-index-wrapper">
+  <h1 class="page-title">Residents' Complaints</h1>
+  <p class="page-description">These are the list of complaints from the barangay residents. Please review each complaint diligently, and discuss further actions with parties involved. Once resolved, do not forget to update the status.</p>
+</div> 
+    <% if @complaints.empty? %>
+  <p class="no-complaints">There are no complaints yet.</p>
+<% else %>
+  <div class="complaint-status-wrapper">
+     <h2 class ="status-labels">Pending Complaints</h2>
+    <div class="pending-complaints">
+     
+      <% @complaints.select { |complaint| complaint.status == 'pending' }.each do |complaint| %>
+        <div class="complaint-card">
+          <div class="complaint-top">
+            <h3 class="complaint-subject"><%= link_to complaint.subject, admin_complaint_path(complaint), class: 'name-link index-link' %></h3>
+            <p class="status-badge <%= complaint.status %>"><%= complaint.status %></p>
+          </div>
+          <p><strong>Filed By:</strong> <%= complaint.user.email %></p>
+          <p class="complaint-details"><%= complaint.created_at.in_time_zone('Asia/Manila').strftime('%d %b %Y, %H:%M:%S') %></p>
+          <p class="complaint-details"><%= truncate(complaint.description, length: 100) %></p>
+        </div>
+      <% end %>
+    </div>
+ <h2 class ="status-labels">Resolved Complaints</h2>
+    <div class="resolved-complaints">
+     
+      <% @complaints.select { |complaint| complaint.status == 'resolved' }.each do |complaint| %>
+        <div class="complaint-card">
+          <div class="complaint-top">
+            <h3 class="complaint-subject"><%= link_to complaint.subject, admin_complaint_path(complaint), class: 'name-link index-link' %></h3>
+            <p class="status-badge <%= complaint.status %>"><%= complaint.status %></p>
+          </div>
+          <p><strong>Filed By:</strong> <%= complaint.user.email %></p>
+          <p class="complaint-details"><%= complaint.created_at.in_time_zone('Asia/Manila').strftime('%d %b %Y, %H:%M:%S') %></p>
+          <p class="complaint-details"><%= truncate(complaint.description, length: 100) %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
