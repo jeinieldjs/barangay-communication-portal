@@ -69,19 +69,19 @@
   </div>
 <% end %>
 <script>
-    let modal = document.getElementById("upload-pic-modal");
-    let span = document.getElementsByClassName("comment-close")[0];
+    var modal1 = document.getElementById("upload-pic-modal");
+    var span1 = document.getElementsByClassName("comment-close")[0];
 
     document.getElementById('avatar-pic').addEventListener('click', function() {
-    modal.style.display = "block";
+    modal1.style.display = "block";
   });
 
-  span.addEventListener('click', function() {
-    modal.style.display = "none";
+  span1.addEventListener('click', function() {
+    modal1.style.display = "none";
   });
 
   document.getElementById("profile-picture-form").addEventListener("submit", function() {
-    modal.style.display = "none";
+    modal1.style.display = "none";
   });
 
   document.getElementById('profile-picture-file-field').addEventListener('change', function() {

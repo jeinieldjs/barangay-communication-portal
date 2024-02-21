@@ -22,8 +22,8 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const toggleButton = document.getElementById('toggle-comments-btn');
-  const commentsContainer = document.querySelector('.comments-container');
+  var toggleButton = document.getElementById('toggle-comments-btn');
+  var commentsContainer = document.querySelector('.comments-container');
 
   toggleButton.addEventListener('click', function() {
     commentsContainer.classList.toggle('hidden');
