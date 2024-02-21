@@ -1,0 +1,32 @@
+<nav>
+    <div class='web-title-container'>
+            <h2 id='web-title'>Barangay Portal</h2>
+    </div>
+
+    <div>
+        <ul class='nav-links-container'>
+            <% if user_signed_in? %>
+                <% if current_user.pending? %>
+                    <li class='nav-links'><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete, confirm: "Are you sure you want to sign out?" } %></li>
+                <% elsif current_user.admin? %>
+                    <li class='nav-links'><%= link_to "Home", admin_dashboard_index_path %></li>
+                    <li class='nav-links'><%= link_to "Residents", admin_residents_path %></li>
+                    <li class='nav-links'><%= link_to "Complaints", admin_complaints_path %></li>
+                    <li class='nav-links'><%= link_to "Announcements", admin_announcements_path %></li>
+                    <li class='nav-links'><%= link_to "Posts", admin_posts_path %></li>
+                    <li class='nav-links'><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete, confirm: "Are you sure you want to sign out?" } %></li>
+                <% else %>
+                    <li class='nav-links'><%= link_to "Home", resident_dashboard_index_path %></li>
+                    <li class='nav-links'><%= link_to "Posts", resident_posts_path %></li>
+                    <li class='nav-links'><%= link_to "Complaints", resident_complaints_path %></li>
+                    <li class='nav-links'><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete, confirm: "Are you sure you want to sign out?"  } %></li>
+                <% end %>
+                
+            <% else %>
+                <li class='nav-links'><%= link_to 'Sign In', new_user_session_path %></li>
+                <li class='nav-links'><%= link_to 'Sign Up', new_user_registration_path %></li>
+            <% end %>
+        </ul>
+    </div>
+
+</nav>

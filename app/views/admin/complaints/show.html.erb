@@ -1,0 +1,62 @@
+<div class="complaint-card-show admin-complaint">
+  <div class="complaint-top">
+    <h2 class="complaint-subject"><%= @complaint.subject %></h2>
+  </div>
+  <div class="complaint-details">
+    <p><strong>Filed By:</strong> <button type="button" id="complaint-modal-link" class="complainant-link"><%= @complaint.user.email %></button></p>
+    <p><strong>Created At:</strong> <%= @complaint.created_at.in_time_zone('Asia/Manila').strftime('%d %b %Y, %H:%M:%S') %></p>
+    <p><strong>Full Description:</strong> <%= @complaint.description %></p>
+  </div>
+
+  <div class="complaint-edit-status">
+    <%= form_with(model: @complaint, url: admin_complaint_path(@complaint), method: :patch) do |form| %>
+      <div class="field">
+        <p><strong><%= form.label :status %></strong></p>
+        <%= form.select :status, ['pending', 'resolved'], {},class: 'status-options' %>
+      </div>
+      <%= form.submit 'Update Status', class: 'status-submit status-button' %>
+    <% end %>
+  </div>
+
+  <div class="resident-show-announcement-actions">
+    <%= link_to 'Back', admin_complaints_path, class: "action-link" %>
+  </div>
+</div>
+
+<div id="resident-details-modal">
+  <div class="modal-content">
+    <div class="modal-top">
+      <h3>Resident Info</h3>
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <p><strong style="color: #5C821A;">Name:</strong> <%= @complaint.user.last_name.titleize %>, <%= @complaint.user.first_name.titleize %></p>
+      <p><strong style="color: #5C821A;">User ID:</strong> <%= @complaint.user.id %></p>
+      <p><strong style="color: #5C821A;">Contact Number:</strong> <%= @complaint.user.contact_number %></p>
+      <p><strong style="color: #5C821A;">Complete Address:</strong> <%= @complaint.user.complete_address.titleize %></p>
+    </div>
+  </div>
+</div>
+<script>
+  console.log("loaded")
+  var modal = document.getElementById("resident-details-modal");
+  var button = document.getElementById("complaint-modal-link");
+  var closeBtn = document.getElementsByClassName("close")[0];
+  console.log(button)
+
+  button.onclick = function() {
+    console.log("clicked")
+    modal.style.display = "block";
+  };
+
+  closeBtn.onclick = function() {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+
+</script>

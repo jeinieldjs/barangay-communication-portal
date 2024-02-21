@@ -1,0 +1,91 @@
+<% if current_user.approved? %>
+  <div class="resident-dash-wrapper">
+    <div class="user-profile-wrapper">
+      <div class="profile-top-container">
+        <div class="avatar-container" id="avatar-pic">
+          <% if current_user.image.attached? %>
+            <%= image_tag(current_user.image, style: "height:100px; width:100px", class: 'avatar') %>
+          <% else %>
+          <div class="avatar-initials" id="image-container"><%= current_user.first_name[0] + current_user.last_name[0] %></div>
+          <% end %>
+        </div>
+        <div class="profile-name"><h2><%= current_user.first_name.upcase %> <%= current_user.last_name.upcase %><h2>
+        </div>
+        </div>
+        <div class="profile-content">
+          <p><strong style="color: #5C821A;">Email:</strong> <%= current_user.email %></p>
+    <p><strong style="color: #5C821A;">Contact Number:</strong> <%= current_user.contact_number %></p>
+    <p><strong style="color: #5C821A;">Complete Address:</strong> <%= current_user.complete_address.titleize %></p>
+    <p><strong style="color: #5C821A;">Regitration Date:</strong> <%= current_user.created_at.in_time_zone('Asia/Manila').strftime('%d %b %Y, %H:%M:%S') %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-container">
+    <div class="dash-header">
+      <h2>Latest announcements</h2>
+      <%= link_to "View All Announcements", resident_announcements_path, class: "action-link" %>
+    </div>
+
+    <div class="residents-dash-index">
+    
+      <% if @announcements.any? %>
+        <% @announcements.each do |announcement| %>
+          <div class="indiv-resident">
+            <h2><%= link_to announcement.title, resident_announcement_path(announcement), class: "name-link" %></h2>
+            <p><small>Posted at: <%= announcement.created_at.in_time_zone('Asia/Manila').strftime('%d %b %Y, %H:%M:%S') %> || Updated at: <%= announcement.updated_at.in_time_zone('Asia/Manila').strftime('%d %b %Y, %H:%M:%S') %></small></p>
+            <p><%= truncate(announcement.content, length: 200) %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <p>No announcements found.</p>
+      <% end %>
+    </div>
+   
+  </div>
+  </div>
+
+  <div id="upload-pic-modal" class="pic-modal">
+  <div class="comment-modal-content">
+    <div class="comment-modal-top">
+    <h2 class="modal-title">Upload Profile Picture</h2> 
+    <span class="comment-close">&times;</span>
+  </div>
+  <div class="comment-modal-body">
+    <%= form_with(model: current_user, url: update_profile_picture_path, local: true, html: { id: "profile-picture-form", method: :patch, multipart: true }) do |form| %>
+      <div class="field">
+        <%= form.file_field :image, id: "profile-picture-file-field"  %>
+      </div>
+      <div class="modal-actions">
+        <%= form.submit "Upload", class: "search-submit", disabled: true %>
+      </div>
+    <% end %>
+</div>
+
+<% else %>
+  <div class="pending-dash">
+    <p>Hi, <strong><%= current_user.first_name %></strong>! Your registration status is currently <strong><%= current_user.status.upcase %></strong>. Please wait for an email confirmation to be sent to <strong><%= current_user.email %></strong>.</p><br>
+    <p>Thank you for your patience!</p>
+  </div>
+<% end %>
+<script>
+    let modal = document.getElementById("upload-pic-modal");
+    let span = document.getElementsByClassName("comment-close")[0];
+
+    document.getElementById('avatar-pic').addEventListener('click', function() {
+    modal.style.display = "block";
+  });
+
+  span.addEventListener('click', function() {
+    modal.style.display = "none";
+  });
+
+  document.getElementById("profile-picture-form").addEventListener("submit", function() {
+    modal.style.display = "none";
+  });
+
+  document.getElementById('profile-picture-file-field').addEventListener('change', function() {
+    document.querySelector('.search-submit').disabled = !this.value;
+  });
+
+</script>

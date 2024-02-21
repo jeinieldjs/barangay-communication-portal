@@ -1,0 +1,29 @@
+<%= form_with(model: [:admin, @announcement], url: @announcement.persisted? ? admin_announcement_path(@announcement) : admin_announcements_path, local: true, class: "announcement-form") do |form| %>
+
+  <% if @announcement.errors.any? %>
+    <div style="color: red;">
+      <h2><%= pluralize(@announcement.errors.count, "error") %> prohibited this announcement from being saved:</h2>
+
+      <ul>
+        <% @announcement.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="announcement-field">
+  <%= form.label :title %>
+  <%= form.text_field :title, required: true, class: "announcement-input" %>
+</div>
+
+<div class="announcement-field">
+  <%= form.label :content %>
+  <%= form.text_area :content, required: true, class: "announcement-input announcement-text-area" %>
+</div>
+
+
+  <div class="actions">
+    <%= form.submit "Submit", class: "user-submit action-link" %>
+  </div>
+<% end %>
