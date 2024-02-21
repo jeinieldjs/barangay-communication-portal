@@ -1,0 +1,96 @@
+<div class="post-index-wrapper">
+  <h1 class="page-title">Posts from Barangay <%= current_user.barangay %></h1>
+   <div class="scroll-btn-container">
+    <button id="scroll-to-bottom-btn"><i class="fas fa-arrow-down" id="arrow-down"></i></button>
+  </div>
+  <div class="posts-index-container">
+    <% @posts.reverse_each do |post| %>
+      <div class="indiv-post">
+        <p>
+          <% if post.anonymous? %>
+            <strong><span>Anonymous:</span></strong>
+          <% else %>
+            <div class="post-index-top">
+              <% if post.user.image.attached? %>
+                <%= image_tag(post.user.image, style: "height:50px; width:50px", class: 'avatar') %>
+              <% else %>
+                <div class="avatar-initials" id="image-container">
+                  <%= post.user.first_name[0] + post.user.last_name[0] %>
+                </div>
+              <% end %>
+              <strong><span><%= post.user.first_name %> <%= post.user.last_name %>:</span></strong>
+            </div>
+          <% end %>
+          <br>
+          <small class="posted-at-info">
+            <%= post.created_at.strftime("%d %b %Y, %H:%M:%S") %>
+          </small>
+        </p>
+        <h3><%= post.title.upcase %></h3>
+        <p><%= post.content %></p>
+        <% if post.comments.present? %>
+          <h6 class="comments-title">Comments:</h6>
+          <% comment_count = post.comments.count %>
+          <button class="toggle-comments-btn posts-buttons" data-post-id="<%= post.id %>" data-comment-count="<%= comment_count %>" data-visible="false">Show all <%= comment_count %> comments</button>
+          <div class="comments-container hidden" id="commentsContainer-<%= post.id %>">
+            <% post.comments.each do |comment| %>
+              <article>
+                <small>By: <%= comment.user.first_name %> <%= comment.user.last_name %></small> || 
+                <small><%= comment.created_at.in_time_zone("Asia/Manila").strftime("%d %b %Y, %H:%M:%S")  %></small>
+                <p><%= comment.content %></p>
+              </article>
+              <hr />
+            <% end %>
+          </div>
+        <% else %>
+        <div class="no-comment-statement">
+          <p><i><small>This post has no comments yet.</small></i></p>
+        </div>
+        <% end %>
+         <div class="posts-btn-container">
+          <%= button_to 'Delete', admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: "posts-buttons admin-posts-index" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+   <div class="scroll-btn-container">
+    <button id="scroll-to-top-btn"><i class="fas fa-arrow-up" id="arrow-up"></i></button>
+  </div>
+</div>
+
+<script>
+    const toggleButtons = document.querySelectorAll(".toggle-comments-btn");
+    
+
+    toggleButtons.forEach(button => {
+      let commentCount = parseInt(button.getAttribute('data-comment-count'));
+
+      button.addEventListener("click", function() {
+        const postId = this.getAttribute("data-post-id");
+        const commentsContainer = document.getElementById(`commentsContainer-${postId}`);
+        const isVisible = this.getAttribute("data-visible") === "true";
+
+        commentsContainer.classList.toggle("hidden");
+        this.innerText = isVisible ? `Show all ${commentCount} comments` : "Hide comments";
+        this.setAttribute("data-visible", !isVisible);
+      });
+    });
+
+    const scrollBtn = document.getElementById("scroll-to-bottom-btn");
+
+    scrollBtn.addEventListener("click", function(){
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+    })
+
+     const scrollTopBtn = document.getElementById("scroll-to-top-btn");
+
+    scrollTopBtn.addEventListener("click", function(){
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    })
+</script>
