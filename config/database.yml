@@ -26,4 +26,8 @@ test:
 
 production:
   <<: *default
-  database: barangay-communication-portal_production
+  database: <%= ENV.fetch("PGDATABASE") %>
+  host: <%= ENV.fetch("PGHOST") %>
+  username: <%= ENV.fetch("PGUSERNAME") %>
+  password: <%= ENV.fetch("PGPASSWORD") %>
+  port: 5432
