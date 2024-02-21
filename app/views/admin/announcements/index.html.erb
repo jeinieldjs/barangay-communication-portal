@@ -1,0 +1,18 @@
+<div class="residents-index-wrapper">
+<h1 class="page-title">Announcements For BRGY.<%= current_user.barangay.upcase %></h1>
+
+  <div class="residents-index-actions">
+<%= link_to "New Announcement", new_admin_announcement_path, class: "action-link" %>
+</div>
+
+<div class="residents-index-container">
+<% @announcements.order(created_at: :desc).each do |announcement| %>
+  <div class="indiv-resident">
+    <h3><%= link_to announcement.title, admin_announcement_path(announcement), class: "name-link" %></h3>
+    <p>Created at: <%= announcement.created_at.strftime("%d %b %Y %H:%M:%S") %></p>
+    <p>Updated at: <%= announcement.updated_at.strftime("%d %b %Y %H:%M:%S") %></p>
+    <p><%= truncate(announcement.content, length: 200) %></p>
+  </div>
+<% end %>
+</div>
+</div>
