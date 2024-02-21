@@ -1003,3 +1003,7 @@ select {
     margin-bottom: 20px;
     background-color: rgb(245, 245, 245);
 }
+.no-announcement {
+    text-align: center;
+    border:none;
+}
