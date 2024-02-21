@@ -1,0 +1,5 @@
+complaint1:
+  subject: "Sample"
+  description: "This is a sample complaint."
+  status: "pending"
+  user: user2
