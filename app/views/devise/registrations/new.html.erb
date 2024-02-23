@@ -71,7 +71,7 @@
       var selectedProvince = this.value;
       var cityMunicipalitySelect = document.getElementById('city_municipality_select');
       console.log(selectedProvince)
-      fetch(`http://127.0.0.1:3000/api/psgc/fetch_cities_municipalities/${selectedProvince}`)
+      fetch(`https://127.0.0.1:3000/api/psgc/fetch_cities_municipalities/${selectedProvince}`)
         .then(response => response.json())
         .then(data => {
           cityMunicipalitySelect.innerHTML = '';
@@ -90,7 +90,7 @@
       var selectedCityMunicipality = this.value;
       var barangaySelect = document.getElementById('barangay_select');
       console.log(selectedCityMunicipality)
-      fetch(`http://127.0.0.1:3000/api/psgc/fetch_barangays/${selectedCityMunicipality}`)
+      fetch(`https://127.0.0.1:3000/api/psgc/fetch_barangays/${selectedCityMunicipality}`)
         .then(response => response.json())
         .then(data => {
           barangaySelect.innerHTML = '';
