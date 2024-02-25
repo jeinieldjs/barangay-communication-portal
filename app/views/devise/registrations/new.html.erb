@@ -67,42 +67,56 @@
   <!--<%= render "devise/shared/links" %>-->
 </div>
 <script>
-    document.getElementById('user_province').addEventListener('change', function() {
-      var selectedProvince = this.value;
-      var cityMunicipalitySelect = document.getElementById('city_municipality_select');
-      console.log(selectedProvince)
-      fetch(`https://127.0.0.1:3000/api/psgc/fetch_cities_municipalities/${selectedProvince}`)
-        .then(response => response.json())
-        .then(data => {
-          cityMunicipalitySelect.innerHTML = '';
-         
-          data['data'].forEach(city => {
-            var option = document.createElement('option');
-            option.value = city.code;
-            option.text = city.name;
-            cityMunicipalitySelect.add(option);
-          });
-        })
-        .catch(error => console.error('Error fetching cities/municipalities:', error));
-    });
+document.getElementById('user_province').addEventListener('change', function() {
+  var selectedProvince = this.value;
+  var cityMunicipalitySelect = document.getElementById('city_municipality_select');
+  fetch(`https://psgc.gitlab.io/api/provinces/${selectedProvince}/cities-municipalities/`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      cityMunicipalitySelect.innerHTML = '';
+      if (Array.isArray(data)) {
+        data.forEach(city => {
+          var option = document.createElement('option');
+          option.value = city.code;
+          option.text = city.name;
+          cityMunicipalitySelect.add(option);
+        });
+      } else {
+        console.error('Error fetching cities/municipalities: Data is not in the expected format');
+      }
+    })
+    .catch(error => console.error('Error fetching cities/municipalities:', error));
+});
 
-    document.getElementById('city_municipality_select').addEventListener('change', function() {
-      var selectedCityMunicipality = this.value;
-      var barangaySelect = document.getElementById('barangay_select');
-      console.log(selectedCityMunicipality)
-      fetch(`https://127.0.0.1:3000/api/psgc/fetch_barangays/${selectedCityMunicipality}`)
-        .then(response => response.json())
-        .then(data => {
+document.getElementById('city_municipality_select').addEventListener('change', function() {
+  var selectedCityMunicipality = this.value;
+  var barangaySelect = document.getElementById('barangay_select');
+  console.log(selectedCityMunicipality);
+  fetch(`https://psgc.gitlab.io/api/cities-municipalities/${selectedCityMunicipality}/barangays`)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
           barangaySelect.innerHTML = '';
-         
-          data['data'].forEach(city => {
-            var option = document.createElement('option');
-            option.value = city.code;
-            option.text = city.name;
-            barangaySelect.add(option);
-          });
-        })
-        .catch(error => console.error('Error fetching barangays', error));
-    });
-
-  </script>
+          if (Array.isArray(data)) {
+              data.forEach(barangay => {
+                  var option = document.createElement('option');
+                  option.value = barangay.code;
+                  option.text = barangay.name;
+                  barangaySelect.add(option);
+              });
+          } else {
+              console.error('Error fetching barangays: Data is not in the expected format');
+          }
+      })
+  .catch(error => console.error('Error fetching barangays:', error));
+});
+</script>

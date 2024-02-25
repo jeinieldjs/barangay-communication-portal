@@ -43,7 +43,7 @@
         <% like = current_user.likes.find_by(post_id: post.id) %>
         <% like_count = post.likes.count %>
         <div class="like-count">
-          <small><i><%= like_count %></i> Likes</small> <!-- Display like count -->
+          <small><i><%= like_count %></i> Likes</small> 
         </div>
         <div class="like-btn-container">
           <% if like.nil? %>
@@ -60,7 +60,7 @@
             </form>
           <% end %>
         </div>
-        <!-- Button modal -->
+    
         <button type="button" class="btn btn-primary comment-btn posts-buttons" data-post-id="<%= post.id %>" data-post-title="<%= post.title %>">
           Add Comment
         </button>
@@ -81,9 +81,9 @@
           </div>
         </div>
 
-        <!-- P TAG para idisplay ung comment -->
+     
         <% if post.comments.present? %>
-          <h6 class="comments-title">Comments:</h6> <!-- Moved "Comments:" text here -->
+          <h6 class="comments-title">Comments:</h6>
           <% comment_count = post.comments.count %>
           <% like_count = post.likes.count %>
           <button class="toggle-comments-btn posts-buttons" data-post-id="<%= post.id %>" data-comment-count="<%= comment_count %>" data-like-count="<%= like_count %>">See all <%= comment_count %> comments</button>
@@ -118,7 +118,7 @@
       var commentsContainer = document.getElementById('commentsContainer-' + postId);
       var commentsTitle = document.querySelector('.comments-title');
       commentsContainer.classList.toggle('hidden');
-      commentsTitle.classList.toggle('hidden'); // Toggle comments title visibility
+      commentsTitle.classList.toggle('hidden'); 
       var commentCount = parseInt(this.getAttribute('data-comment-count'));
       var likeCount = parseInt(this.getAttribute('data-like-count'));
       if (commentsContainer.classList.contains('hidden')) {
