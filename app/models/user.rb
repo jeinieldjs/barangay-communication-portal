@@ -18,4 +18,15 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
 
+  after_create :send_status_email
+
+  private
+
+  def send_status_email
+    if status == 'pending'
+      UserMailer.pending_email(self).deliver_later
+    end
+  end
+  
+
 end

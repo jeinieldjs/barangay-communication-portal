@@ -54,7 +54,7 @@ class Admin::ResidentsController < ApplicationController
       end
 
       if @user.update(resident_params)
-=begin
+
         if @user.saved_change_to_status?
           if @user.status == 'approved'
             UserMailer.approved_email(@user).deliver_later
@@ -62,7 +62,7 @@ class Admin::ResidentsController < ApplicationController
             UserMailer.rejected_email(@user).deliver_later
           end
         end
-=end
+
         redirect_to admin_residents_path, notice: "Resident's account was successfully updated."
       else
         render :edit, status: :unprocessable_entity
